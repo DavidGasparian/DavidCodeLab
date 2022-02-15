@@ -23,9 +23,10 @@ class RandomWords extends StatefulWidget {
   @override
   _RandomWordsState createState() => _RandomWordsState();
 }
-
+//TODO: Я код впринципе понимаю, просто у меня какие-то ошибки выдаются
 class _RandomWordsState extends State<RandomWords> {
   List <WordPair> _suggestions = [];
+  final _saved = <WordPair>{};
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
@@ -45,12 +46,19 @@ class _RandomWordsState extends State<RandomWords> {
   }
   @override
   Widget _buildRow(WordPair pair) {
+    final alreadySaved = _saved.contains(pair);
     return ListTile(
       title: Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: Icon(     // NEW from here...
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+        semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
+      ),                  // ... to here.
     );
+  }
   }
 
   @override
